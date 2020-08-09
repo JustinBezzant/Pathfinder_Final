@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Thunderbrace_Stronghold.unity
+- path: Assets/Scenes/Thunderbrace_Ground.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

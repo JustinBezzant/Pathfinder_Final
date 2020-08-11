@@ -11,6 +11,7 @@ public class Camera_Movement : MonoBehaviour
     public float transAccel;
     public float maxSpeed;
     public float maxZ, minZ,maxX,minX;
+    public bool activeCamera;
     void Start()
     {
         
@@ -19,70 +20,81 @@ public class Camera_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (activeCamera == true)
         {
-            if (gameObject.transform.position.z < maxZ)
+            if (Input.GetKey(KeyCode.W))
             {
-                transVelUp = transVelUp + transAccel;
-                if (transVelUp > maxSpeed)
+                if (gameObject.transform.position.z < maxZ)
                 {
-                    transVelUp = maxSpeed;
+                    transVelUp = transVelUp + transAccel;
+                    if (transVelUp > maxSpeed)
+                    {
+                        transVelUp = maxSpeed;
+                    }
+                    gameObject.transform.Translate(0, transVelUp, 0);
                 }
-                gameObject.transform.Translate(0, transVelUp, 0);
             }
-        }
-        else
-        {
-            transVelUp = 0;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (gameObject.transform.position.z > minZ)
+            else
             {
+                transVelUp = 0;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (gameObject.transform.position.z > minZ)
+                {
 
-                transVelDown = transVelDown - transAccel;
-                if (transVelDown > maxSpeed)
-                {
-                    transVelDown = maxSpeed;
+                    transVelDown = transVelDown - transAccel;
+                    if (Mathf.Abs(transVelDown) > maxSpeed)
+                    {
+                        transVelDown = -1 * maxSpeed;
+                    }
+                    gameObject.transform.Translate(0, transVelDown, 0);
                 }
-                gameObject.transform.Translate(0, transVelDown, 0);
             }
-        }
-        else
-        {
-            transVelDown = 0;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            if (gameObject.transform.position.x > minX)
+            else
             {
-                transVelLeft = transVelLeft - transAccel;
-                if (transVelLeft > maxSpeed)
-                {
-                    transVelLeft = maxSpeed;
-                }
-                gameObject.transform.Translate(transVelLeft, 0, 0);
+                transVelDown = 0;
             }
-        }
-        else
-        {
-            transVelLeft = 0;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            if (gameObject.transform.position.x < maxX)
+            if (Input.GetKey(KeyCode.A))
             {
-                transVelRight = transVelRight + transAccel;
-                if (transVelRight > maxSpeed)
+                if (gameObject.transform.position.x > minX)
                 {
-                    transVelRight = maxSpeed;
+                    transVelLeft = transVelLeft - transAccel;
+                    if (Mathf.Abs(transVelLeft) > maxSpeed)
+                    {
+                        transVelLeft = -1 * maxSpeed;
+                    }
+                    gameObject.transform.Translate(transVelLeft, 0, 0);
                 }
-                gameObject.transform.Translate(transVelRight, 0, 0);
+            }
+            else
+            {
+                transVelLeft = 0;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                if (gameObject.transform.position.x < maxX)
+                {
+                    transVelRight = transVelRight + transAccel;
+                    if (transVelRight > maxSpeed)
+                    {
+                        transVelRight = maxSpeed;
+                    }
+                    gameObject.transform.Translate(transVelRight, 0, 0);
+                }
+            }
+            else
+            {
+                transVelRight = 0;
             }
         }
-        else
-        {
-            transVelRight = 0;
-        }
+    }
+    public void Camera_Select()
+    {
+        activeCamera = true;
+    }
+    public void Camera_Deselect()
+    {
+        activeCamera = false;
     }
 }
